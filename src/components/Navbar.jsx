@@ -26,7 +26,13 @@ export default function Navbar() {
               <a className="nav-link" href="#home" onClick={() => setIsOpen(false)}>Home</a>
             </li>
             <li className="nav-item">
+              <a className="nav-link" href="#vehicle" onClick={() => setIsOpen(false)}>Vehicles</a>
+            </li>
+            <li className="nav-item">
               <a className="nav-link" href="#destinations" onClick={() => setIsOpen(false)}>Destinations</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#Gallery" onClick={() => setIsOpen(false)}>Gallery</a>
             </li>
             <li className="nav-item">
               <a className="nav-link" href="#packages" onClick={() => setIsOpen(false)}>Packages</a>

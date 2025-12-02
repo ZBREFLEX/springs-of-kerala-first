@@ -1,4 +1,4 @@
-import "./Vechicle.css"
+import "./Vehicle.css"
 
 const vehicles = [
   {
@@ -22,12 +22,56 @@ const vehicles = [
     features: ["Air Conditioning", "Power Steering", "Insurance Included", "GPS Navigation"],
     description: "Perfect for solo travelers and couples. Fuel-efficient and comfortable for city tours.",
     available: true,
+  },
+  {
+    id: 3,
+    name: " Maruti Suzuki Ertiga",
+    type: "MPV",
+    capacity: "7 Passengers",
+    pricePerDay: "₹1,500",
+    image: "https://auto.hindustantimes.com/cms-images/marutisuzuki_ertiga/images/exterior_marutisuzuki-ertiga2022_front-left-side_1150x666.jpeg?imwidth=930",
+    features: ["Air Conditioning", "Power Steering", "Insurance Included", "GPS Navigation"],
+    description: "Perfect for solo travelers and couples. Fuel-efficient and comfortable for city tours.",
+    available: true,
+  },
+  {
+    id: 4,
+    name: " Toyota Innova ",
+    type: "MPV",
+    capacity: "7 Passengers",
+    pricePerDay: "₹1,500",
+    image: "https://5.imimg.com/data5/VE/FU/VN/SELLER-102887681/innova-touring-sport-toyota-car-1000x1000.jpg",
+    features: ["Air Conditioning", "Power Steering", "Insurance Included", "GPS Navigation"],
+    description: "Perfect for solo travelers and couples. Fuel-efficient and comfortable for city tours.",
+    available: true,
+  },
+  {
+    id: 5,
+    name: " Toyota Innova Crysta ",
+    type: "MPV",
+    capacity: "7 Passengers",
+    pricePerDay: "₹1,500",
+    image: "https://imgd.aeplcdn.com/664x374/n/cw/ec/140809/innova-crysta-exterior-right-front-three-quarter-3.png?isig=0&q=80",
+    features: ["Air Conditioning", "Power Steering", "Insurance Included", "GPS Navigation"],
+    description: "Perfect for solo travelers and couples. Fuel-efficient and comfortable for city tours.",
+    available: true,
+  },
+  {
+    id: 6,
+    name: " Toyota Innova Hycross ",
+    type: "MPV",
+    capacity: "7 Passengers",
+    pricePerDay: "₹1,500",
+    image: "https://imgd.aeplcdn.com/642x361/n/cw/ec/202089/innova-hycross-exterior-left-front-three-quarter.jpeg?isig=0&q=80",
+    features: ["Air Conditioning", "Power Steering", "Insurance Included", "GPS Navigation"],
+    description: "Perfect for solo travelers and couples. Fuel-efficient and comfortable for city tours.",
+    available: true,
   }
 ]
 
 export default function Vehicle() {
   return (
-    <section id="vehicles" className="py-5 bg-white">
+    <section id="vehicle" className="py-5 bg-white">
       <div className="container">
         <div className="text-center mb-5">
           <h2 className="display-5 fw-bold mb-3">Our Services</h2>
