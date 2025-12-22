@@ -1,126 +1,177 @@
-import "./Vehicle.css"
-
-const vehicles = [
-  {
-    id: 1,
-    name: "Toyota Etios",
-    type: "Sedan",
-    capacity: "4 Passengers",
-    pricePerDay: "₹1,500",
-    image: "https://cdni.autocarindia.com/ExtraImages/20140327112642_etios.jpg?w=728&q=75",
-    features: ["Air Conditioning", "Power Steering", "Insurance Included", "GPS Navigation"],
-    description: "Perfect for solo travelers and couples. Fuel-efficient and comfortable for city tours.",
-    available: true,
-  },
-   {
-    id: 2,
-    name: " Maruti Suzuki Dzire",
-    type: "Sedan",
-    capacity: "4 Passengers",
-    pricePerDay: "₹1,500",
-    image: "https://imgd.aeplcdn.com/642x361/n/cw/ec/46045/marutisuzuki-dzire-exterior0.jpeg?wm=1&q=80",
-    features: ["Air Conditioning", "Power Steering", "Insurance Included", "GPS Navigation"],
-    description: "Perfect for solo travelers and couples. Fuel-efficient and comfortable for city tours.",
-    available: true,
-  },
-  {
-    id: 3,
-    name: " Maruti Suzuki Ertiga",
-    type: "MPV",
-    capacity: "7 Passengers",
-    pricePerDay: "₹1,500",
-    image: "https://auto.hindustantimes.com/cms-images/marutisuzuki_ertiga/images/exterior_marutisuzuki-ertiga2022_front-left-side_1150x666.jpeg?imwidth=930",
-    features: ["Air Conditioning", "Power Steering", "Insurance Included", "GPS Navigation"],
-    description: "Perfect for solo travelers and couples. Fuel-efficient and comfortable for city tours.",
-    available: true,
-  },
-  {
-    id: 4,
-    name: " Toyota Innova ",
-    type: "MPV",
-    capacity: "7 Passengers",
-    pricePerDay: "₹1,500",
-    image: "https://5.imimg.com/data5/VE/FU/VN/SELLER-102887681/innova-touring-sport-toyota-car-1000x1000.jpg",
-    features: ["Air Conditioning", "Power Steering", "Insurance Included", "GPS Navigation"],
-    description: "Perfect for solo travelers and couples. Fuel-efficient and comfortable for city tours.",
-    available: true,
-  },
-  {
-    id: 5,
-    name: " Toyota Innova Crysta ",
-    type: "MPV",
-    capacity: "7 Passengers",
-    pricePerDay: "₹1,500",
-    image: "https://imgd.aeplcdn.com/664x374/n/cw/ec/140809/innova-crysta-exterior-right-front-three-quarter-3.png?isig=0&q=80",
-    features: ["Air Conditioning", "Power Steering", "Insurance Included", "GPS Navigation"],
-    description: "Perfect for solo travelers and couples. Fuel-efficient and comfortable for city tours.",
-    available: true,
-  },
-  {
-    id: 6,
-    name: " Toyota Innova Hycross ",
-    type: "MPV",
-    capacity: "7 Passengers",
-    pricePerDay: "₹1,500",
-    image: "https://imgd.aeplcdn.com/642x361/n/cw/ec/202089/innova-hycross-exterior-left-front-three-quarter.jpeg?isig=0&q=80",
-    features: ["Air Conditioning", "Power Steering", "Insurance Included", "GPS Navigation"],
-    description: "Perfect for solo travelers and couples. Fuel-efficient and comfortable for city tours.",
-    available: true,
-  }
-]
+import { useEffect, useState } from "react";
+import { supabase } from "../supabase/client";
+import WhatsAppButton from "./WhatsAppButton";
+import "./Vehicle.css";
 
 export default function Vehicle() {
+  const [vehicles, setVehicles] = useState([]);
+  const [selectedType, setSelectedType] = useState("All");
+  const [showAvailableOnly, setShowAvailableOnly] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    fetchVehicles();
+    fetchCategories();
+  }, []);
+
+  const fetchVehicles = async () => {
+    setLoading(true);
+
+    const { data, error } = await supabase
+      .from("vehicles")
+      .select(
+        `
+        id,
+        name,
+        capacity,
+        price,
+        image,
+        available,
+        features,
+        description,
+        vehicle_categories ( name )
+      `
+      )
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.error("Supabase error:", error);
+    } else {
+      setVehicles(data || []);
+    }
+
+    setLoading(false);
+  };
+  const fetchCategories = async () => {
+    const { data, error } = await supabase
+      .from("vehicle_categories")
+      .select("id, name")
+      .order("name");
+
+    if (error) {
+      console.error("Category fetch error:", error);
+    } else {
+      setCategories(data || []);
+    }
+  };
+
+  const filteredVehicles = vehicles.filter((v) => {
+    const typeName = v.vehicle_categories?.name;
+
+    const typeMatch = selectedType === "All" || typeName === selectedType;
+
+    const availabilityMatch = !showAvailableOnly || v.available === true;
+
+    return typeMatch && availabilityMatch;
+  });
+
   return (
     <section id="vehicle" className="py-5 bg-white">
       <div className="container">
-        <div className="text-center mb-5">
-          <h2 className="display-5 fw-bold mb-3">Our Services</h2>
-          <p className="lead text-muted">Choose the perfect vehicle for your Kerala adventure</p>
+        {/* Heading */}
+        <div className="text-center mb-4">
+          <h2 className="display-5 fw-bold">Our Services</h2>
+          <p className="text-muted">
+            Choose the perfect vehicle for your Kerala adventure
+          </p>
         </div>
 
+        {/* Filters */}
+        {/* Category Filters */}
+        {/* Filters */}
+        <div className="d-flex justify-content-center gap-3 mb-4 flex-wrap">
+          {/* ALL */}
+          <button
+            className={`btn btn-sm rounded-pill ${
+              selectedType === "All" ? "btn-success" : "btn-outline-success"
+            }`}
+            onClick={() => setSelectedType("All")}
+          >
+            All
+          </button>
+
+          {/* CATEGORY BUTTONS */}
+          {categories.map((cat) => (
+            <button
+              key={cat.id}
+              className={`btn btn-sm rounded-pill ${
+                selectedType === cat.name
+                  ? "btn-success"
+                  : "btn-outline-success"
+              }`}
+              onClick={() => setSelectedType(cat.name)}
+            >
+              {cat.name}
+            </button>
+          ))}
+
+          {/* AVAILABLE ONLY */}
+          <button
+            className={`btn btn-sm rounded-pill ${
+              showAvailableOnly ? "btn-success" : "btn-outline-success"
+            }`}
+            onClick={() => setShowAvailableOnly(!showAvailableOnly)}
+          >
+            Available Only
+          </button>
+        </div>
+
+        {/* Vehicles */}
         <div className="row g-4">
-          {vehicles.map((vehicle) => (
-            <div key={vehicle.id} className="col-lg-4 col-md-6">
-              <div className={`card vehicle-card h-100`}>
-                <div className="vehicle-image-wrapper">
-                  <img src={vehicle.image || "/placeholder.svg"} alt={vehicle.name} className="vehicle-image" />
-                  {vehicle.available && (
-                    <div className="vehicle-badge">
-                      <span className="badge bg-success">{vehicle.type}</span>
+          {loading && <p className="text-center">Loading vehicles...</p>}
+
+          {!loading &&
+            filteredVehicles.map((vehicle) => (
+              <div key={vehicle.id} className="col-lg-4 col-md-6">
+                <div className="card vehicle-card h-100">
+                  <div className="vehicle-image-wrapper position-relative">
+                    <img
+                      src={vehicle.image}
+                      alt={vehicle.name}
+                      className="vehicle-image"
+                    />
+                    <span className="badge bg-success position-absolute top-0 end-0 m-2">
+                      {vehicle.vehicle_categories?.name}
+                    </span>
+                  </div>
+
+                  <div className="card-body p-4">
+                    <h5 className="fw-bold">{vehicle.name}</h5>
+
+                    <p className="small text-muted">{vehicle.description}</p>
+
+                    <p className="fw-semibold mb-2">👥 {vehicle.capacity}</p>
+
+                    {vehicle.features?.length > 0 && (
+                      <ul className="list-unstyled small mb-3">
+                        {vehicle.features.map((f, i) => (
+                          <li key={i}>✔ {f}</li>
+                        ))}
+                      </ul>
+                    )}
+
+                    <div className="d-flex justify-content-between align-items-center">
+                      <span className="fw-bold text-success">
+                        ₹{vehicle.price}/day
+                      </span>
+
+                      <WhatsAppButton
+                        vehicleName={vehicle.name}
+                        price={vehicle.price}
+                        description={vehicle.description}
+                      />
                     </div>
-                  )}
-                </div>
-
-                <div className="card-body p-4">
-                  <h3 className="card-title fw-bold mb-2">{vehicle.name}</h3>
-                  <p className="text-muted mb-3 small">{vehicle.description}</p>
-
-                  <div className="capacity-info mb-4 pb-4 border-bottom">
-                    <i className="bi bi-people-fill text-success me-2"></i>
-                    <span className="fw-semibold">{vehicle.capacity}</span>
                   </div>
-
-                  <ul className="list-unstyled mb-4">
-                    {vehicle.features.map((feature, idx) => (
-                      <li key={idx} className="mb-2">
-                        <i className="bi bi-check-circle-fill text-success me-2"></i>
-                        <span className="small">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <div className="price-section mb-4 pb-4 border-bottom">
-                    <span className="h3 fw-bold text-success">{vehicle.pricePerDay}</span>
-                    <span className="text-muted small">/day</span>
-                  </div>
-
-                  <button className="btn btn-success w-100 rounded-pill py-2 fw-bold">Whatsapp Now</button>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+
+          {!loading && filteredVehicles.length === 0 && (
+            <p className="text-center text-muted">No vehicles found</p>
+          )}
         </div>
       </div>
     </section>
-  )
+  );
 }

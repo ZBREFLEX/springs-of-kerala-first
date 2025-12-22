@@ -6,9 +6,9 @@ export default function About() {
       <div className="container">
         <div className="row align-items-center g-5">
           <div className="col-lg-6">
-            <h2 className="display-5 fw-bold mb-4">About Springs of Kerala</h2>
+            <h2 className="display-5 fw-bold mb-4">About KeralaPath</h2>
             <p className="lead mb-4">
-              For over a decade, Springs of Kerala has been crafting unforgettable journeys through
+              For over a decade, KeralaPath has been crafting unforgettable journeys through
               God's Own Country. We are passionate about showcasing the rich cultural heritage,
               pristine natural beauty, and warm hospitality that Kerala is renowned for.
             </p>

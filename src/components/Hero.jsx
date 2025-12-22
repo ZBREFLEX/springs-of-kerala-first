@@ -12,9 +12,8 @@ export default function Hero() {
             </h1>
             <h3 className="display-7 fw-bold text-white mb-4 hero-title typing-text">
               Welcome to Kerala Path Tours and Travels
-              <span className="typing-cursor"></span>
             </h3>
-            <p className="lead text-white mb-5 hero-subtitle">
+            {/* <p className="lead text-white mb-5 hero-subtitle">
               Kerala Path Tours & Travels delivers dependable, fully-covered travel services across Kerala, 
               offering taxi packages, car rentals, and Tempo Travellers for every type of trip. Our vehicles 
               are maintained and sanitized regularly to ensure safety and comfort in all conditions. We operate
@@ -22,7 +21,7 @@ export default function Hero() {
                 making your travel smooth and efficient. Backed by a support team available around the clock, Kerala 
                 Path Tours & Travels focuses on reliable service, transparent pricing, and a hassle-free travel 
                 experience for customers exploring any part of Kerala.
-            </p>
+            </p> */}
             <div className="d-flex gap-3 justify-content-center flex-wrap">
               <a href="#Vehicle" className="btn btn-light btn-lg px-5 rounded-pill">
                 Vehicle Services

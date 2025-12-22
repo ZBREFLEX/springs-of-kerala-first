@@ -1,0 +1,133 @@
+/* ================================
+   FORCE GRID LAYOUT (FIXES 1 IMAGE PER ROW)
+================================ */
+.gallery-page {
+  padding-top: 40px;   /* THIS fixes the button touching top */
+  padding-bottom: 60px;
+  background: #f9fbfc;
+}
+.gallery-page-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 28px;
+  max-width: 1400px;
+  padding: 0 20px;
+  margin: 0 auto;
+}
+.gallery-page-header {
+  max-width: 1400px;
+  margin: 0 auto 40px;
+  padding: 0 20px;
+}
+
+/* ================================
+   FIX CARD SIZE
+================================ */
+.gallery-page-card {
+  position: relative;
+  height: 280px;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #e5e7eb;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.gallery-page-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
+}
+
+/* ================================
+   FIX IMAGE STRETCH
+================================ */
+.gallery-page-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ================================
+   OVERLAY FIX
+================================ */
+.gallery-page-overlay {
+  position: absolute;
+  inset: 0;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.85),
+    rgba(0, 0, 0, 0.35),
+    transparent
+  );
+}
+
+.gallery-page-card-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+}
+
+.gallery-page-card-tours {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-top: 4px;
+}
+
+/* ================================
+   RESPONSIVE
+================================ */
+@media (max-width: 768px) {
+  .gallery-page-grid {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  }
+
+  .gallery-page-card {
+    height: 240px;
+  }
+}
+
+@media (max-width: 480px) {
+  .gallery-page-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .gallery-page-card {
+    height: 220px;
+  }
+}
+/* ================================
+   BACK BUTTON STYLE
+================================ */
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #0a7e5c, #0ea678);
+  color: #fff;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(10, 126, 92, 0.35);
+  transition: all 0.3s ease;
+}
+
+.back-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(10, 126, 92, 0.45);
+  background: linear-gradient(135deg, #0ea678, #0a7e5c);
+}
+
+.back-button:active {
+  transform: translateY(0);
+  box-shadow: 0 5px 15px rgba(10, 126, 92, 0.3);
+}
